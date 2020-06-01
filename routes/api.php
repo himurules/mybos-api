@@ -60,6 +60,10 @@ Route::group([
         'BuildingsController@summary'
     );
     Route::get(
+        'buildings/{buildings}/action-items',
+        'BuildingsController@actionItems'
+    );
+    Route::get(
         'buildings/{buildings}/cases-summary',
         'BuildingsController@casesSummary'
     );

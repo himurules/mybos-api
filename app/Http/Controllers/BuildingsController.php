@@ -59,4 +59,16 @@ class BuildingsController extends Controller
         $cases = $buildings->cases()->groupBy('type')->select('type', DB::raw('count(*) as total'))->get();
         return response()->json($cases);
     }
+
+    public function actionItems(Buildings $buildings) {
+        $actionsItems = [
+            'overdue_case' => 123,
+            'insurance_expiring'    => 23,
+            'resident_update'   =>11,
+            'overdue_maintenance'    =>31,
+            'pending_booking'   =>7,
+            'warranty_expiring' =>3
+        ];
+        return response()->json($actionsItems);
+    }
 }
