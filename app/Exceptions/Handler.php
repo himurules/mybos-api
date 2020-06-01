@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -50,6 +52,37 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException)
+        {
+            return response(['Token is invalid'], 401);
+        }
+        if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException)
+        {
+            return response(['Token has expired'], 401);
+        }
+        // This will replace our 404 response with
+        // a JSON response.
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json(
+                [
+                    'error' => 'Resource not found'
+                ],
+                404
+            );
+        }
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Return Unauthenticated Response for authenticated request
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param AuthenticationException $exception
+     *
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json(['error' => 'Unauthenticated'], 401);
     }
 }

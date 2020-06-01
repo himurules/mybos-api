@@ -38,6 +38,7 @@ class AuthController extends Controller
 
     /**
      * @param RegisterRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(RegisterRequest $request)

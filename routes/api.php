@@ -26,4 +26,47 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
+    //Buildings Routes
+    Route::get(
+        'buildings/{buildings}/activity-feed',
+        'BuildingsController@activityFeed'
+    );
+});
+
+Route::group([
+
+    'middleware' => 'api',
+
+], function ($router) {
+    //Buildings Routes
+    Route::get(
+        'buildings/{buildings}/activity-feed',
+        'BuildingsController@activityFeed'
+    );
+    Route::get(
+        'buildings/{buildings}/notes',
+        'BuildingsController@notes'
+    );
+    Route::get(
+        'buildings/{buildings}/work-orders',
+        'BuildingsController@workOrders'
+    );
+    Route::get(
+        'buildings/{buildings}/cases',
+        'BuildingsController@cases'
+    );
+    Route::get(
+        'buildings/{buildings}/summary',
+        'BuildingsController@summary'
+    );
+    Route::get(
+        'buildings/{buildings}/cases-summary',
+        'BuildingsController@casesSummary'
+    );
+
+    //Important Numbers
+    Route::get(
+        '/important-numbers',
+        'ImportantNumbersController@index'
+    );
 });
